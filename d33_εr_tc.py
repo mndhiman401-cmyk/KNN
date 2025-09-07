@@ -12,17 +12,17 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
 import numpy as np
 
-file_path = 'd33 for ML-Final Used.xlsx'
+file_path = 'Dataset.xlsx'
 
 # Load datasets
 training = pd.read_excel(file_path, sheet_name='Training')
 testing = pd.read_excel(file_path, sheet_name='Testing')
 
 # Separate features and target variable
-X_train = training.drop(columns=['Y'])
-y_train = training['Y']
-X_test = testing.drop(columns=['Y'])
-y_test = testing['Y']
+X_train = training.drop(columns=['d33,er,Tc'])
+y_train = training['d33,er,Tc']
+X_test = testing.drop(columns=['d33,er,Tc'])
+y_test = testing['d33,er,Tc']
 
 # Identify categorical columns
 categorical_cols = ['B', 'C']
@@ -286,11 +286,11 @@ xgboost_model = xgb.XGBRegressor(
     n_jobs=-1
 )
 param_grid = {
-    "n_estimators": list(range(50, 501, 50)),   # avoid 0 trees
+    "n_estimators": list(range(50, 501, 50)),   
     "learning_rate": [0.02, 0.05, 0.1, 0.2],
     "max_depth": [3, 4, 5, 6]
 }
-cv = KFold(n_splits=5, shuffle=True, random_state=42)
+cv = KFold(n_splits=10, shuffle=True, random_state=42)
 grid_xgboost = GridSearchCV(
     estimator=xgboost_model,
     param_grid=param_grid,
